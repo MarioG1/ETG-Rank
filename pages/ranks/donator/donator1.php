@@ -38,6 +38,7 @@
 		<div class="thumbnail">
           <h2>Abilities:</h2>
           <ul>
+          <li>Can set 40 Warp's.</li>
           <li>Can create Web Auction Signs.</li>
           <li>Can link warps to buttons/pressure plates.</li>
           <li>Can teleport to other player.</li>

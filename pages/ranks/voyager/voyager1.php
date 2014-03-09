@@ -38,7 +38,7 @@
 		<div class="thumbnail">
           <h2>Abilities:</h2>
           <ul>
-              <li>None</li>
+              <li>Can set 20 Warp's.</li>
           </ul>
        </div>
 	   </div>

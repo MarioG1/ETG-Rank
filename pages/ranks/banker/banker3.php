@@ -37,6 +37,7 @@
 		<div class="thumbnail">
           <h2>Abilities:</h2>
           <ul>
+          <li>Can set 40 Warp's.</li>
           <li>Can create Web Auction Signs.</li>
           <li>Can see how many money a other player has.</li>
           <li>Can see the money ranking.</li>
