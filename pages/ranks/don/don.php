@@ -30,7 +30,7 @@
           <h2>Description:</h2>
           <p>
            The Don rank is last rank on this server. <br>
-           If you want to be a "Don" you have to get all non payed ranks (Banker, Warrior, Warlord, Dwarf, Voyager, Architect).<br>
+           If you want to be a "Don" you have to get all non payed ranks (Millionaire, Warlord, Dwarf, Voyager, Genius).<br>
            As a Don you can choose a custome name prefix.
           </p>
         </div>
