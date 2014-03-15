@@ -22,7 +22,7 @@ function calculate_proz($value, $hp){
 
 function calculate_vote_ratio($tm, $lm){
     if($tm-$lm >= 0){
-        return calculate_proz($tm, $lm);
+        return calculate_proz($tm-$lm, $lm);
     }
     else{
         return -calculate_proz($lm-$tm, $lm);
