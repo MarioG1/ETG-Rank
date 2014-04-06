@@ -14,7 +14,7 @@ class player {
    
         use stats, auth;
         
-        //loign data
+        //login data
         
         private $name;
         private $uuid;
@@ -416,7 +416,7 @@ class player {
    }
    
 //Stats ------------------------------------------------------------------------------------------------------------------------------------
-    private function get_uuid(){
+    public function get_uuid(){
       if(!isset($this->uuid)){
           $this->queries++;
           $this->uuid = $this->MySql_stats->QuerySingleValue("SELECT player_id FROM stats_players WHERE name = '". $this->name ."'");

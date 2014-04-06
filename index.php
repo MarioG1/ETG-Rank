@@ -149,7 +149,7 @@
                   <li><a href="?page=password">Password Mangagement</a></li>
                   <li><a href="?page=ban_history">Ban History</a></li>
                   <?php
-                  echo '<li><a href="http://stats.etg-clan.at/index.php?page=player&name='.$player->name().'">Stats</a></li>';
+                  echo '<li><a href="http://stats.etg-clan.at/index.php?page=player&id='.$player->get_uuid().'">Stats</a></li>';
                   ?>
                 </ul>
               </li>
