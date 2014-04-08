@@ -222,12 +222,18 @@
    }
    }
   }
+  
+  if(!$player->is_loggedin())
+   {
+    echo'<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>You have to use your shop password to log in!</br> If you do not have an Shop password yet use /wa password <anypassword> to get one. </div>';
+   }
+   
  ?>
 
  <!-- Render selected page -->
 
      <?php
-        $player->has_emain(); //Checks if the player has an E-Mail
+        //$player->has_emain(); //Checks if the player has an E-Mail
         switch($page)
         {
           case "home":

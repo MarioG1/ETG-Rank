@@ -1,6 +1,7 @@
  <!-- Change Server Password -->
 
  <?php
+ /*
  if(isset($_POST["server_change"]))
   {
      switch($player->change_pw_authme($_POST["server_pw_old"],$_POST["server_pw_new"],$_POST["server_pw_new_conf"]))
@@ -21,7 +22,7 @@
              echo'<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button> Something went wrong! Please contact an admin. </div>';
              break;  
      }
-  }
+  }*/
 ?>
 
  <!-- Change Forum Password -->
@@ -85,7 +86,7 @@
 
       <!-- Example row of columns -->
       <div class="row">
-        <div class="span4">
+       <!-- <div class="span4">
 		<div class="thumbnail">
           <h2>Server</h2>
           <h5>Old Password</h5>
@@ -96,8 +97,8 @@
           <p><form method="POST"><input class="span2" type="password" placeholder="Confirm Password" name="server_pw_new_conf"></from></p>
           <p><form method="POST"><button type="submit" class="btn" name="server_change">Change It! &raquo;</button></from></p>
         </div>
-		</div>
-        <div class="span4">
+		</div><-->
+        <div class="span6">
 		<div class="thumbnail">
           <h2>Shop</h2>
           <h5>Old Password</h5>
@@ -109,7 +110,7 @@
           <p><form method="POST"><button type="submit" class="btn" name="shop_change">Change It! &raquo;</button></from></p>
        </div>
 	   </div>
-        <div class="span4">
+        <div class="span6">
 		<div class="thumbnail">
           <h2>Forum</h2>
           <h5>E-Mail</h5>

@@ -21,7 +21,7 @@ class player {
         private $isloggedin;
         private $queries;
         private $actual_rank;
-        private $email;
+        //private $email;
         private $banid;
         private $bans;
         
@@ -55,7 +55,7 @@ class player {
         public function __wakeup() {
         $this->config = new config();
         
-        $this->MySql_authme = new MySQL('TRUE', $this->config->get_authme_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
+        //$this->MySql_authme = new MySQL('TRUE', $this->config->get_authme_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
         $this->MySql_stats = new MySQL('TRUE', $this->config->get_statistics_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
         $this->MySql_perms = new MySQL('TRUE', $this->config->get_permissions_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
         $this->MySql_shop = new MySQL('TRUE', $this->config->get_shop_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
@@ -67,7 +67,7 @@ class player {
         
         if($this->config->get_debug()){
             echo '__wakeup Player </br>';
-            $this->MySql_authme->ThrowExceptions =  TRUE;
+            //$this->MySql_authme->ThrowExceptions =  TRUE;
             $this->MySql_stats->ThrowExceptions =  TRUE;
             $this->MySql_perms->ThrowExceptions =  TRUE;
             $this->MySql_shop->ThrowExceptions =  TRUE;
@@ -88,7 +88,7 @@ class player {
 
     public function __construct($name=FALSE) {
         $this->config = new config();
-        $this->MySql_authme = new MySQL('TRUE', $this->config->get_authme_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
+        //$this->MySql_authme = new MySQL('TRUE', $this->config->get_authme_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
         $this->MySql_stats = new MySQL('TRUE', $this->config->get_statistics_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
         $this->MySql_perms = new MySQL('TRUE', $this->config->get_permissions_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
         $this->MySql_shop = new MySQL('TRUE', $this->config->get_shop_database(), $this->config->get_host(), $this->config->get_username(), $this->config->get_password());
@@ -100,7 +100,7 @@ class player {
         if(!$name) $this->name = $name;
         if($this->config->get_debug()){
             echo '__construnct Player </br>';
-            $this->MySql_authme->ThrowExceptions =  TRUE;
+            //$this->MySql_authme->ThrowExceptions =  TRUE;
             $this->MySql_stats->ThrowExceptions =  TRUE;
             $this->MySql_perms->ThrowExceptions =  TRUE;
             $this->MySql_shop->ThrowExceptions =  TRUE;
@@ -113,7 +113,7 @@ class player {
     }
     
     public function __destruct() { 
-        $this->MySql_authme->close();
+        //$this->MySql_authme->close();
         $this->MySql_stats->close();
         $this->MySql_perms->close();
         $this->MySql_shop->close();
@@ -167,7 +167,7 @@ class player {
         return true;
     }
     
-    public function has_emain()
+   /* public function has_emain()
     {
       if(!isset($this->actual_rank) AND $this->isloggedin){
          $this->queries++;
@@ -178,7 +178,7 @@ class player {
              $this->email = $email;
          }
       }
-    }
+    }*/
     
     public function set_name($name,$d = FALSE){
         if($this->MySql_perms->QuerySingleValue('SELECT * FROM permissions_inheritance where child = "'.$name.'"') != NULL OR $d){
@@ -229,6 +229,7 @@ class player {
     }
     
 //Password Manager--------------------------------------------------------------------------------------------------------------------------
+ /*   
  public function change_pw_authme($oldpw,$newpw,$confpw){
    if((!strcmp($newpw,$confpw)))
    {
@@ -258,7 +259,7 @@ class player {
             } else return 1;   
         }else return 3;
    }else return 2;
- }
+ }*/
  
   public function change_pw_shop($oldpw,$newpw,$confpw){
    if((!strcmp($newpw,$confpw)))
