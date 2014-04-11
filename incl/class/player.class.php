@@ -28,6 +28,7 @@ class player {
         //stats
         
         private $playtime;
+        private $stats_id;
         
         private $money;
         
@@ -83,7 +84,7 @@ class player {
     public function __sleep() {
         if($this->config->get_debug()) echo '__sleep Player';
         //return array('name', 'isloggedin', 'actual_rank', 'email', 'bans', 'banid', 'money', 'kills','kills_id', 'ukills', 'deaths', 'blocks', 'blocks_id', 'distance', 'donated', 'arch', 'uuid', 'votes_top', 'votes_tm', 'votes_lm' );
-        return array('name', 'isloggedin');
+        return array('name', 'isloggedin', 'uuid', 'stats_id');
     }  
 
     public function __construct($name=FALSE) {
@@ -123,6 +124,8 @@ class player {
         $this->MySql_rank->close();
         $this->MySql_vote->close();
         unset($this->name);
+        unset($this->uuid);
+        unset($this->stats_id);
         unset($this->isloggedin);
         if($this->config->get_debug()) echo '__destruct Player </br>';
         if($this->get_debug()) echo"Database Qureies: $this->queries </br>";
@@ -139,6 +142,8 @@ class player {
       {
        $this->isloggedin = TRUE;
        $this->name = $user;
+       $this->uuid = $this->get_uuid();
+       $this->stats_id = $this->get_stats_id();
        return true;
       }
       else
@@ -181,8 +186,10 @@ class player {
     }*/
     
     public function set_name($name,$d = FALSE){
-        if($this->MySql_perms->QuerySingleValue('SELECT * FROM permissions_inheritance where child = "'.$name.'"') != NULL OR $d){
+        if($this->MySql_perms->QuerySingleValue('SELECT * FROM permissions where value = "'.$name.'" AND permission = "name" AND type = "1"') != NULL OR $d){
         $this->name = $name;
+        $this->uuid = $this->MySql_stats->QuerySingleValue("SELECT uuid FROM stats_players WHERE name = '". $this->name ."'");
+        $this->stats_id = $this->MySql_stats->QuerySingleValue("SELECT player_id FROM stats_players WHERE uuid = '". $this->uuid ."'");
         return TRUE; 
         } else {
             $this->name = FALSE;
@@ -193,6 +200,16 @@ class player {
     public function name()
     {
         return $this->name;
+    }
+ 
+    public function uuid()
+    {
+        return $this->uuid;
+    }
+    
+    public function stats_id()
+    {
+        return $this->stats_id;
     }
     
     public function has_access($page){
@@ -271,7 +288,7 @@ class player {
                 $hash = md5($newpw);
                 $values["password"] = $this->MySql_shop->SQLValue($hash);
                 $where["playerName"] = $this->MySql_shop->SQLValue($this->name());
-                if($this->MySql_shop->UpdateRows("wa_players",$values,$where) != TRUE)
+                if($this->MySql_shop->UpdateRows("wa_Players",$values,$where) != TRUE)
                 {
                     return 4;
                 } else return 0;
@@ -330,7 +347,7 @@ class player {
     public function get_current_rank(){
      if(!isset($this->actual_rank)){
         $this->queries++;
-        $this->actual_rank = $this->MySql_perms->QuerySingleValue("SELECT parent FROM permissions_inheritance WHERE child = '$this->name'");
+        $this->actual_rank = $this->MySql_perms->QuerySingleValue("SELECT parent FROM permissions_inheritance WHERE child = '$this->uuid'");
         if ($this->actual_rank == NULL) $this->actual_rank = 'default';
      }
      return $this->actual_rank;
@@ -339,7 +356,7 @@ class player {
     public function get_ranks_db(){
       if(!isset($this->ranks_db)){
           $this->queries++;
-          $this->ranks_db = $this->MySql_rank->QueryArray("SELECT * FROM rank where name = '". $this->name ."'")[0];
+          $this->ranks_db = $this->MySql_rank->QueryArray("SELECT * FROM rank where uuid = '". $this->uuid ."' OR (name = '". $this->name ."' AND uuid IS NULL)")[0];
           if($this->ranks_db == NULL) $this->ranks_db = Array ( 'banker' => 0,
                                                                 'warrior' => 0,
                                                                 'dwarf' => 0,
@@ -362,14 +379,28 @@ class player {
    }
     
     public function save_rank($rank, $level){
-      $values["name"] = $this->MySql_perms->SQLValue($this->name());
-      $values[$rank] = $this->MySql_perms->SQLValue($level);
-      $where["name"] = $this->MySql_perms->SQLValue($this->name());
-      if($this->MySql_rank->AutoInsertUpdate("rank",$values,$where)){
-          return TRUE;
+      if($this->MySql_rank->HasRecords("SELECT * FROM rank where name = '". $this->name ."' AND uuid IS NOT NULL"))
+      {
+        $values["name"] = $this->MySql_perms->SQLValue($this->name);
+        $values["uuid"] = $this->MySql_perms->SQLValue($this->uuid);
+        $values[$rank] = $this->MySql_perms->SQLValue($level);
+        $where["uuid"] = $this->MySql_perms->SQLValue($this->uuid);
+        if($this->MySql_rank->AutoInsertUpdate("rank",$values,$where)){
+            return TRUE;
+        } else {
+            return FALSE;
+        }  
       } else {
-         return FALSE;
-     }  
+        $values["name"] = $this->MySql_perms->SQLValue($this->name);
+        $values["uuid"] = $this->MySql_perms->SQLValue($this->uuid);
+        $values[$rank] = $this->MySql_perms->SQLValue($level);
+        $where["name"] = $this->MySql_perms->SQLValue($this->name);
+        if($this->MySql_rank->AutoInsertUpdate("rank",$values,$where)){
+            return TRUE;
+        } else {
+            return FALSE;
+        } 
+      }
     }
     
    public function is_locked($rank){
@@ -381,9 +412,9 @@ class player {
     }
     
     public function lock_rank($rank){
-      $values["name"] = $this->MySql_perms->SQLValue($this->name());
+      $values["uuid"] = $this->MySql_perms->SQLValue($this->uuid);
       $values[$rank.'_lock'] = $this->MySql_perms->SQLValue('1');
-      $where["name"] = $this->MySql_perms->SQLValue($this->name());
+      $where["uuid"] = $this->MySql_perms->SQLValue($this->uuid);
       if($this->MySql_rank->AutoInsertUpdate("rank",$values,$where)){
           return TRUE;
       } else {
@@ -392,9 +423,9 @@ class player {
     }
     
      public function unlock_rank($rank){
-      $values["name"] = $this->MySql_perms->SQLValue($this->name());
+      $values["uuid"] = $this->MySql_perms->SQLValue($this->uuid);
       $values[$rank.'_lock'] = $this->MySql_perms->SQLValue('0');
-      $where["name"] = $this->MySql_perms->SQLValue($this->name());
+      $where["uuid"] = $this->MySql_perms->SQLValue($this->uuid);
       if($this->MySql_rank->AutoInsertUpdate("rank",$values,$where)){
           return TRUE;
       } else {
@@ -417,18 +448,26 @@ class player {
    }
    
 //Stats ------------------------------------------------------------------------------------------------------------------------------------
-    public function get_uuid(){
+    private function get_uuid(){
       if(!isset($this->uuid)){
           $this->queries++;
-          $this->uuid = $this->MySql_stats->QuerySingleValue("SELECT player_id FROM stats_players WHERE name = '". $this->name ."'");
+          $this->uuid = $this->MySql_stats->QuerySingleValue("SELECT uuid FROM stats_players WHERE name = '". $this->name ."'");
       }
       return $this->uuid;  
+   } 
+   
+   private function get_stats_id(){
+      if(!isset($this->stats_id)){
+          $this->queries++;
+          $this->stats_id = $this->MySql_stats->QuerySingleValue("SELECT player_id FROM stats_players WHERE uuid = '". $this->uuid ."'");
+      }
+      return $this->stats_id;  
    }  
    
     private function get_playtime(){
       if(!isset($this->playtime)){
           $this->queries++;
-          $this->playtime = $this->MySql_stats->QuerySingleValue("SELECT playtime FROM stats_players WHERE name = '". $this->name ."'");
+          $this->playtime = $this->MySql_stats->QuerySingleValue("SELECT playtime FROM stats_players WHERE uuid = '". $this->get_stats_id() ."'");
       }
       return $this->playtime;  
    } 
@@ -444,9 +483,9 @@ class player {
    public function get_kills(){
       if(!isset($this->kills)){
           $this->queries++;
-          $this->kills['pvp'] = $this->MySql_stats->QuerySingleValue("SELECT SUM(times) AS kills FROM stats_total_pvp_kills WHERE player_id ='". $this->get_uuid() ."'");
+          $this->kills['pvp'] = $this->MySql_stats->QuerySingleValue("SELECT SUM(times) AS kills FROM stats_total_pvp_kills WHERE player_id ='". $this->get_stats_id() ."'");
           if($this->kills['pvp'] == NULL) $this->kills['pvp'] = 0;
-          $this->kills['pve'] = $this->MySql_stats->QuerySingleValue("SELECT SUM(creature_killed) AS kills FROM stats_total_pve_kills WHERE player_id = '". $this->get_uuid() ."'");
+          $this->kills['pve'] = $this->MySql_stats->QuerySingleValue("SELECT SUM(creature_killed) AS kills FROM stats_total_pve_kills WHERE player_id = '". $this->get_stats_id() ."'");
           if($this->kills['pvp'] == NULL) $this->kills['pvp'] = 0;
       }
       return $this->kills; 
@@ -455,9 +494,9 @@ class player {
    public function get_ukills(){
       if(!isset($this->ukills)){
           $this->queries++;
-          $this->ukills['pvp'] = $this->MySql_stats->QuerySingleValue("SELECT COUNT(*) AS kills FROM stats_total_pvp_kills WHERE player_id ='". $this->get_uuid() ."'");
+          $this->ukills['pvp'] = $this->MySql_stats->QuerySingleValue("SELECT COUNT(*) AS kills FROM stats_total_pvp_kills WHERE player_id ='". $this->get_stats_id() ."'");
           if($this->ukills['pvp'] == NULL) $this->ukills['pvp'] = 0;
-          $this->ukills['pve'] = $this->MySql_stats->QuerySingleValue("SELECT COUNT(*) AS kills FROM stats_total_pve_kills WHERE player_id = '". $this->get_uuid() ."'");
+          $this->ukills['pve'] = $this->MySql_stats->QuerySingleValue("SELECT COUNT(*) AS kills FROM stats_total_pve_kills WHERE player_id = '". $this->get_stats_id() ."'");
           if($this->ukills['pve'] == NULL) $this->ukills['pve'] = 0;
       }
       return $this->ukills;  
@@ -467,7 +506,7 @@ class player {
        foreach($id as $k){
            if(!isset($this->kills_id[$k['id']])){
             $this->queries++;
-            $this->kills_id[$k['id']] = $this->MySql_stats->QuerySingleValue("SELECT SUM(creature_killed) FROM stats_total_pve_kills WHERE player_id ='". $this->get_uuid() ."' AND entity_id ='". $k['id'] ."' AND player_killed = '0'");
+            $this->kills_id[$k['id']] = $this->MySql_stats->QuerySingleValue("SELECT SUM(creature_killed) FROM stats_total_pve_kills WHERE player_id ='". $this->get_stats_id() ."' AND entity_id ='". $k['id'] ."' AND player_killed = '0'");
             if($this->kills_id[$k['id']] == NULL) $this->kills_id[$k['id']] = 0;
            }
        }
@@ -477,8 +516,8 @@ class player {
    public function get_deaths(){
       if(!isset($this->deaths)){
           $this->queries++;
-          $this->deaths['pvp'] = $this->MySql_stats->QuerySingleValue("SELECT SUM(times) AS deaths FROM stats_total_pvp_kills WHERE victim_id ='". $this->get_uuid() ."'");
-          $this->deaths['pve'] = $this->MySql_stats->QuerySingleValue("SELECT SUM(player_killed) AS deaths FROM stats_total_pve_kills WHERE player_id = '". $this->get_uuid() ."'");
+          $this->deaths['pvp'] = $this->MySql_stats->QuerySingleValue("SELECT SUM(times) AS deaths FROM stats_total_pvp_kills WHERE victim_id ='". $this->get_stats_id() ."'");
+          $this->deaths['pve'] = $this->MySql_stats->QuerySingleValue("SELECT SUM(player_killed) AS deaths FROM stats_total_pve_kills WHERE player_id = '". $this->get_stats_id() ."'");
       }
       return $this->deaths;  
    }
@@ -486,7 +525,7 @@ class player {
    public function get_blocks(){
       if(!isset($this->blocks)){
           $this->queries++;
-          $this->blocks = $this->MySql_stats->QueryArray("SELECT SUM(placed) AS placed, SUM(destroyed) AS broken  FROM stats_total_blocks WHERE player_id = '". $this->get_uuid() ."'")[0];
+          $this->blocks = $this->MySql_stats->QueryArray("SELECT SUM(placed) AS placed, SUM(destroyed) AS broken  FROM stats_total_blocks WHERE player_id = '". $this->get_stats_id() ."'")[0];
       }
       return $this->blocks;  
    }
@@ -509,7 +548,7 @@ class player {
                }*/
                $in = str_replace('|', "','", $k['id']); // build IN condition
                $this->queries++;
-               $this->blocks_id[$k['id']] = $this->MySql_stats->QueryArray("SELECT SUM(placed) AS placed, SUM(destroyed) AS broken  FROM stats_total_blocks WHERE player_id = '". $this->get_uuid() ."' AND material_id IN('".$in."')")[0];
+               $this->blocks_id[$k['id']] = $this->MySql_stats->QueryArray("SELECT SUM(placed) AS placed, SUM(destroyed) AS broken  FROM stats_total_blocks WHERE player_id = '". $this->get_stats_id() ."' AND material_id IN('".$in."')")[0];
                if($this->blocks_id[$k['id']] == NULL) $this->blocks_id[$k['id']] = 0;
            }
        $where = '';    
@@ -520,7 +559,7 @@ class player {
    public function get_distance(){
       if(!isset($this->distance)){
           $this->queries++;
-          $this->distance = $this->MySql_stats->QueryArray("SELECT SUM(foot+boat+minecart+ride+swim+flight) AS total, foot AS foot  FROM stats_distances WHERE player_id = '". $this->get_uuid() ."'")[0];
+          $this->distance = $this->MySql_stats->QueryArray("SELECT SUM(foot+boat+minecart+ride+swim+flight) AS total, foot AS foot  FROM stats_distances WHERE player_id = '". $this->get_stats_id() ."'")[0];
       }
       return $this->distance;  
    }
@@ -528,7 +567,7 @@ class player {
    public function get_donated(){
       if(!isset($this->donated)){
           $this->queries++;
-          $this->donated = $this->MySql_rank->QuerySingleValue("SELECT donated_money FROM rank where name = '". $this->name ."'");
+          $this->donated = $this->MySql_rank->QuerySingleValue("SELECT donated_money FROM rank where uuid = '". $this->uuid ."' OR (name = '". $this->name ."' AND uuid IS NULL)");
           if($this->donated == NULL) $this->donated = 0;
       }
       return $this->donated;  
@@ -537,7 +576,7 @@ class player {
    public function get_arch(){
       if(!isset($this->arch)){
           $this->queries++;
-          $this->arch = $this->MySql_rank->QuerySingleValue("SELECT architect FROM rank where name = '". $this->name ."'");
+          $this->arch = $this->MySql_rank->QuerySingleValue("SELECT architect FROM rank where uuid = '". $this->uuid ."' OR (name = '". $this->name ."' AND uuid IS NULL)");
           if($this->arch == NULL) $this->arch = 0;
       }
       return $this->arch;  

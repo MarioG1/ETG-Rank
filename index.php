@@ -149,7 +149,7 @@
                   <li><a href="?page=password">Password Mangagement</a></li>
                   <li><a href="?page=ban_history">Ban History</a></li>
                   <?php
-                  echo '<li><a href="http://stats.etg-clan.at/index.php?page=player&id='.$player->get_uuid().'">Stats</a></li>';
+                  echo '<li><a href="http://stats.etg-clan.at/index.php?page=player&id='.$player->stats_id().'">Stats</a></li>';
                   ?>
                 </ul>
               </li>
@@ -225,7 +225,7 @@
   
   if(!$player->is_loggedin())
    {
-    echo'<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>You have to use your shop password to log in!</br> If you do not have an Shop password yet use /wa password <anypassword> to get one. </div>';
+    echo'<div class="alert alert-warning"><button type="button" class="close" data-dismiss="alert">&times;</button>You have to use your shop password to log in!</br> If you do not have an shop password yet use /wa password <anypassword> to get one. </div>';
    }
    
  ?>

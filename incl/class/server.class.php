@@ -134,9 +134,9 @@ class server {
      if(!isset($this->players)){
      $this->queries++;
      $this->players = array ("Name");
-     $help =$this->MySql_perms->QueryArray("SELECT * FROM permissions_inheritance where type = '1'");
+     $help =$this->MySql_perms->QueryArray("SELECT * FROM permissions where type = '1' AND permission = 'name'");
      foreach($help as $k){
-       array_push($this->players, $k["child"]);
+       array_push($this->players, $k["value"]);
      }
      }
      return $this->players;
