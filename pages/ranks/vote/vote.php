@@ -147,7 +147,8 @@
     <p>You can vote once a day on the following server lists. For each vote you get 50$ and if you have the most votes after one month you get the Vote King rank.</p>
        <h3>Server Lists:</h3>
        <ul>
-	       <li><a href="http://minecraft-mp.com/server-s516">www.minecraft-mp.com</a></li>
+	   <li><a href="http://minecraft-mp.com/server-s516">www.minecraft-mp.com</a></li>
+           <li><a href="http://www.minecraft-serverlist.net/server/504">www.minecraft-serverlist.net</a></li>
            <li><a href="http://minecraftservers.com/servers/mc-etg-clan-at">www.minecraftservers.com</a></li>
            <li><a href="http://minecraft-server-list.com/server/45509/">www.minecraft-server-list.com</a></li>
            <li><a href="https://minestatus.net/29670-etg-free-build-and-survival-24-7">www.minestatus.net</a></li>
