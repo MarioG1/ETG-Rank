@@ -85,7 +85,7 @@ if($_GET["id"]=='12asd3d4d5as6') {
       //Demote -------------------------------------------------------------------------------------------------
        
           //Banker ----------------------------------------------------------------------------------------------
-          if($player->is_locked('banker')){
+          if($player->is_locked('banker') && ($player->get_current_rank() == $config->get_banker_limits()['PERM_3'] || $player->get_current_rank() == $config->get_banker_limits()['PERM_2'] || $player->get_current_rank() == $config->get_banker_limits()['PERM_1'])){
               echo'Banker is locked for this player';
               send_message('&5[INFO] &6Sorry! &4Due to cheating your actual rank ist locked!',$player->name());
               $player->set_rank ($config->get_builder_limits()['PERM_1']);         
@@ -115,7 +115,7 @@ if($_GET["id"]=='12asd3d4d5as6') {
               } 
           }
           //Warrior ----------------------------------------------------------------------------------------------
-          if($player->is_locked('warrior')){
+          if($player->is_locked('warrior') && ($player->get_current_rank() == $config->get_warrior_limits()['PERM_3'] || $player->get_current_rank() == $config->get_warrior_limits()['PERM_2'] || $player->get_current_rank() == $config->get_warrior_limits()['PERM_1'])){
               echo'Warrior is locked for this player';
               send_message('&5[INFO] &6Sorry! &4Due to cheating your actual rank ist locked!',$player->name());
               $player->set_rank ($config->get_builder_limits()['PERM_1']);         
@@ -145,7 +145,7 @@ if($_GET["id"]=='12asd3d4d5as6') {
               } 
           }
           //Don ----------------------------------------------------------------------------------------------
-          if($player->is_locked('don')){
+          if($player->is_locked('don') && $player->get_current_rank() == $config->get_don_limits()['PERM_1']){
               echo'Don is locked for this player';
               send_message('&5[INFO] &6Sorry! &4Due to cheating your actual rank ist locked!',$player->name());
               $player->set_rank ($config->get_builder_limits()['PERM_1']);         
@@ -159,7 +159,7 @@ if($_GET["id"]=='12asd3d4d5as6') {
               } 
           }
           //Voter ----------------------------------------------------------------------------------------------
-          if($player->is_locked('voter')){
+          if($player->is_locked('voter') && ($player->get_current_rank() == $config->get_voter_limits()['PERM_3'] || $player->get_current_rank() == $config->get_voter_limits()['PERM_2'] || $player->get_current_rank() == $config->get_voter_limits()['PERM_1'])){
               echo'Voter is locked for this player';
               send_message('&5[INFO] &6Sorry! &4Due to cheating your actual rank ist locked!',$player->name());
               $player->set_rank ($config->get_builder_limits()['PERM_1']);         
@@ -174,14 +174,14 @@ if($_GET["id"]=='12asd3d4d5as6') {
           }
           
           //Dwarf ----------------------------------------------------------------------------------------------
-          if($player->is_locked('dwarf')){
+          if($player->is_locked('dwarf') && ($player->get_current_rank() == $config->get_dwarf_limits()['PERM_3'] || $player->get_current_rank() == $config->get_dwarf_limits()['PERM_2'] || $player->get_current_rank() == $config->get_dwarf_limits()['PERM_1'])){
               echo'Dwarf is locked for this player';
               send_message('&5[INFO] &6Sorry! &4Due to cheating your actual rank ist locked!',$player->name());
               $player->set_rank ($config->get_builder_limits()['PERM_1']);         
           }
           
           //Voyager ----------------------------------------------------------------------------------------------
-          if($player->is_locked('voyager')){
+          if($player->is_locked('voyager') && ($player->get_current_rank() == $config->get_voyager_limits()['PERM_3'] || $player->get_current_rank() == $config->get_voyager_limits()['PERM_2'] || $player->get_current_rank() == $config->get_voyager_limits()['PERM_1'])){
               echo'Voyager is locked for this player';
               send_message('&5[INFO] &6Sorry! &4Due to cheating your actual rank ist locked!',$player->name());
               $player->set_rank ($config->get_builder_limits()['PERM_1']);         
