@@ -23,12 +23,13 @@ if(isset($_POST["search"]))
 if(isset($_POST["save"]))
    {
          if(isset($_POST["optionsDonator"])){
-             $optionsDonator = $_POST["optionsDonator"];  
-             if($_POST["optionsDonator"] == 1) $donatedmoney = 5;
-             if($_POST["optionsDonator"] == 2) $donatedmoney = 25;
-         } else{
-             $optionsDonator = 0;
+             $optionsDonator = $_POST["optionsDonator"];
              $donatedmoney = $_POST["donatedmoney"];
+             if($optionsDonator == 1 && $donatedmoney == NULL) $donatedmoney = 5;
+             if($optionsDonator == 2 && $donatedmoney == NULL) $donatedmoney = 25;
+         } else{
+             if($donatedmoney >= 5) $optionsDonator = 1;
+             if($donatedmoney >= 25) $optionsDonator = 2;
          }
          
          if(isset($_POST["optionsArchitect"])) $optionsArchitect = $_POST["optionsArchitect"]; else $optionsArchitect = 0;
