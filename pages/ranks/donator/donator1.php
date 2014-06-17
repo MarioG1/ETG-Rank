@@ -2,7 +2,7 @@
 
      <div class="row">
      <div class="span9"> <div class="hero-unit">
-        <h1><font color="#AA00AA">[</font><font color="#FF55FF"><?php echo $config->get_donator_limits()['NAME_1'];?></font><font color="#AA00AA">]</font></h1>
+        <h1><font color="#0000AA">[</font><font color="#FFAA00"><?php echo $config->get_donator_limits()['NAME_1'];?></font><font color="#0000AA">]</font></h1>
      </div> </div>
      <div class ="span3">
          <h4>Current <?php echo $config->get_donator_limits()['NAME_1'];?>'s:</h4>

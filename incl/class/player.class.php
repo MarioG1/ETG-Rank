@@ -608,7 +608,7 @@ class player {
      public function get_top_votes_lm(){
          if(!isset($this->votes_top)){
          $this->queries++;
-         $this->votes_top = $this->MySql_vote->QuerySingleValue('SELECT username, count(*) AS "votes" FROM votes WHERE YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) GROUP BY username ORDER BY votes DESC LIMIT 0,1');
+         $this->votes_top = $this->MySql_vote->QueryArray('SELECT username, count(*) AS "votes" FROM votes WHERE YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) GROUP BY username ORDER BY votes DESC LIMIT 0,3');
          return $this->votes_top;
          }
      else {
@@ -668,7 +668,14 @@ class player {
           if($this->get_donated() >= $this->config->get_donator_limits()['MONEY_1']) $this->ranks['donator'][1] = TRUE; else $this->ranks['donator'][1] = FALSE;
           
           // VOTE KING ****************************
-          if(!strcmp($this->name,$this->get_top_votes_lm())) $this->ranks['voter'][1] = TRUE; else $this->ranks['voter'][1] = FALSE;
+          foreach($this->get_top_votes_lm() AS $u){
+          if(!strcmp($this->name,$u['username'])){
+            $this->ranks['voter'][1] = TRUE;
+            break;
+          } else {
+            $this->ranks['voter'][1] = FALSE;  
+          }          
+          }
           
           // DON **********************************
           if($this->ranks['banker'][3] AND $this->ranks['warrior'][3] AND $this->ranks['dwarf'][3] AND $this->ranks['voyager'][3] AND $this->ranks['architect'][3]) $this->ranks['don'][1] = TRUE; else $this->ranks['don'][1] = FALSE;

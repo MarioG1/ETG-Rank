@@ -172,7 +172,7 @@ if($_GET["id"]=='12asd3d4d5as6') {
                   send_message('&5[INFO] &6Sorry! &4You&6 lost the '.$config->get_voter_limits()['NAME_1'].' rank!',$player->name());
               } 
           }
-          
+                    
           //Dwarf ----------------------------------------------------------------------------------------------
           if($player->is_locked('dwarf') && ($player->get_current_rank() == $config->get_dwarf_limits()['PERM_3'] || $player->get_current_rank() == $config->get_dwarf_limits()['PERM_2'] || $player->get_current_rank() == $config->get_dwarf_limits()['PERM_1'])){
               echo'Dwarf is locked for this player';

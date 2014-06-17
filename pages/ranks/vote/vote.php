@@ -8,7 +8,16 @@
          <h4>Current <?php echo $config->get_voter_limits()['NAME_1'];?>:</h4>
          <?php
           $names=$server->get_playersbyrank('voter',1);
-          echo '<img class="skin" src="http://shop.etg-clan.at/?page=mcskin&amp;user='.$names[0]['name'].'&amp;view=body" width="70" height="140" title="'.$names[0]['name'].'"  style="margin-left:30%; margin-right:auto;"></img>';
+          if($names){
+          foreach($names as $k)
+          {
+           echo '<img src="';
+           echo get_face($k['name']);
+           echo '"title="';
+           echo $k['name'];
+           echo '" style="margin:2px;"></img>';
+          }
+          }
          ?>
       </div>
     </div>
@@ -20,7 +29,7 @@
             <div class="thumbnail">
           <h2>Description:</h2>
           <p> You can vote once a day.</p>
-          <p> You get 50$ per vote and if you have got the most votes in the previous month, you will be able to get the voter-rank next month.</p>
+          <p> You get 100$ per vote and if you are one of the top 3 players with the most votes in the previous month, you will be able to get the voter-rank next month.</p>
           <p>To get a list of links to the server lists wher you can vote klick press the button below.</p>
           <button class="btn btn-primary" type="button" href="#vote_modal" role="button" data-toggle="modal">Vote Links&raquo;</button>
         </div>
@@ -67,15 +76,21 @@
                     <?php
                         $votes_lm = $server->get_votes_lm(10);
                         if($votes_lm){
+                        $i = 1;
                         foreach($votes_lm as $k){
                              echo '<td align="center" valign="top">';
                              echo '<img src="'. get_face($k['username']) .'"title="'. $k['username'] .'"></img>&nbsp';
                              echo '</td><td width ="80%" align="center">';
-                             echo '<div class="progress progress-striped">';
+                             if($i<4){
+                                echo '<div class="progress progress-success progress-striped">';
+                             } else {
+                                echo '<div class="progress progress-info progress-striped">';    
+                             }
                              echo '<div class="bar" style="width:'. calculate_proz($k['votes'], $votes_lm[0]['votes']) .'%">'.$k['votes'].' Votes</div>';
                              echo '</div>';            
                              echo '</td>';
-                             echo '</tr>';  
+                             echo '</tr>'; 
+                        $i++;     
                         }
                         }
                    ?>
@@ -91,6 +106,7 @@
                     <?php
                         $votes_tm = $server->get_votes_tm(10);
                         if($votes_tm){
+                        $i = 1;
                         foreach($votes_tm as $k){
                              echo '<td align="center" valign="top">';
                              echo '<img src="';
@@ -102,11 +118,16 @@
                              echo '</td><td align="center" valign="top">';
                              echo '<img src="'. get_face($k['username']) .'"title="'. $k['username'] .'"></img>&nbsp';
                              echo '</td><td width ="80%" align="center">';
-                             echo '<div class="progress progress-striped">';
+                             if($i<4){
+                                echo '<div class="progress progress-success progress-striped">';
+                             } else {
+                                echo '<div class="progress progress-info progress-striped">';    
+                             }
                              echo '<div class="bar" style="width:'. calculate_proz($k['votes'], $votes_tm[0]['votes']) .'%">'.$k['votes'].' Votes</div>';
                              echo '</div>';            
                              echo '</td>';
-                             echo '</tr>';  
+                             echo '</tr>';
+                             $i++;  
                         }
                         }
                    ?>
@@ -155,6 +176,7 @@
            <li><a href="http://minecraft.serverlister.com/servers/f8e35bf0b36c43eb921bd3cf4294c1bb/etg-free-build-and-survival-24-7">www.serverlister.com</a></li>
            <li><a href="http://www.minecraft-index.com/848-etg-free-build-and-survival-24-7">www.minecraft-index.com</a></li>
            <li><a href="http://minecraft-server.eu/index.php?go=server&id=78519">www.minecraft-server.eu</a></li>
+           <li><a href="http://www.planetminecraft.com/server/etg-free-build-and-survival-247/">www.planetminecraft.com</a></li>
        </ul>
   </div>
   <div class="modal-footer">
