@@ -169,6 +169,7 @@
        <h3>Server Lists:</h3>
        <ul>
 	   <li><a href="http://minecraft-mp.com/server-s516">www.minecraft-mp.com</a></li>
+           <li><a href="http://theminecraftserverlist.com/server/mc.etg-clan.at">www.theminecraftserverlist.com</a></li>
            <li><a href="http://www.minecraft-serverlist.net/server/504">www.minecraft-serverlist.net</a></li>
            <li><a href="http://minecraftservers.org/server/144508">www.minecraftservers.org</a></li>
            <li><a href="http://minecraft-server-list.com/server/45509/">www.minecraft-server-list.com</a></li>

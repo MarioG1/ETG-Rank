@@ -30,7 +30,7 @@
           <h2>Description:</h2>
           <p>
            Be on the run!<br> To get the <?php echo $config->get_voyager_limits()['NAME_1'];?> Rank you have to go very far. <br>
-           After <?php echo number_format($config->get_voyager_limits()['TOTAL_1'], 2, ',', '.'); ?>m Traveled and (walked, swum, piggybacked, mine card) and <?php echo number_format($config->get_voyager_limits()['WALKED_1'], 2, ',', '.'); ?>m walked you've got the possibility to Choosee this rank!
+           After <?php echo number_format($config->get_voyager_limits()['TOTAL_1'], 2, ',', '.'); ?>m Traveled and (walked, swum, piggybacked, mine card) you've got the possibility to Choosee this rank!
           </p>
         </div>
 		</div>
