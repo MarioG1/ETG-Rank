@@ -1,4 +1,7 @@
 <h2>Sponsor:</h2>
+<div class="alert alert-error">
+    The Sponsor rank is not aviable at the moment due to of the <a href="https://mojang.com/2014/06/lets-talk-server-monetisation-the-follow-up-qa/">EULA</a> changes.
+</div>
 <h4>Current rank: ---</h4>
 <h4>Next rank: <?php echo $config->get_donator_limits()['NAME_1']?></h4>
 <h5>Money</h5>
