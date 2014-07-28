@@ -218,7 +218,25 @@ class server {
     public function get_votes_tm($number=5){
          if(!isset($this->votes_tm)){
          $this->queries++;
-         $this->votes_tm = $this->MySql_vote->QueryArray('SELECT username, count(*) AS "votes" FROM votes WHERE MONTH(timestamp) = MONTH(CURDATE()) AND YEAR(timestamp) = YEAR(CURDATE()) GROUP BY username ORDER BY votes DESC LIMIT 0,'.$number);
+         $this->votes_tm = $this->MySql_vote->QueryArray('
+                                                        SELECT username, count(*) AS "votes" 
+                                                        FROM votes 
+                                                        WHERE 
+                                                            MONTH(timestamp) = MONTH(CURDATE()) 
+                                                            AND YEAR(timestamp) = YEAR(CURDATE()) 
+                                                            AND (SELECT parent 
+                                                                FROM permissions_inheritance 
+                                                                WHERE 
+                                                                child = (SELECT name 
+                                                                        FROM permissions 
+                                                                        WHERE 
+                                                                            type = "1" 
+                                                                            AND permission = "name" 
+                                                                            AND value = username))
+                                                            NOT IN ("mod", "admin", "owner")			
+                                                        GROUP BY username 
+                                                        ORDER BY votes DESC 
+                                                        LIMIT 0,'.$number);
          if($this->votes_tm == NULL) $this->votes_tm = FALSE;
          return $this->votes_tm;
          }
