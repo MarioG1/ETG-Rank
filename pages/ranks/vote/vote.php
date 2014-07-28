@@ -1,5 +1,14 @@
 <!-- Main hero unit for a primary marketing message or call to action -->
-
+    <?php
+    if($player->get_current_rank() == 'mod' OR $player->get_current_rank() == 'admin' OR $player->get_current_rank() == 'owner'){
+    echo'
+        <div class="alert alert-info">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <b>Info</b> Your votes are removed form the list because you are an member of the ETG staff.
+        </div>
+        ';
+    }
+    ?>
      <div class="row">
      <div class="span9"> <div class="hero-unit">
         <h1><font color="#FFAA00">[</font><font color="#AA0000"><?php echo $config->get_voter_limits()['NAME_1'];?></font><font color="#FFAA00">]</font></h1>
