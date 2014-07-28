@@ -248,7 +248,25 @@ class server {
      public function get_votes_lm($number=5){
          if(!isset($this->votes_lm)){
          $this->queries++;
-         $this->votes_lm = $this->MySql_vote->QueryArray('SELECT username, count(*) AS "votes" FROM votes WHERE YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) GROUP BY username ORDER BY votes DESC LIMIT 0,'.$number);
+         $this->votes_lm = $this->MySql_vote->QueryArray('
+                                                        SELECT username, count(*) AS "votes" 
+                                                        FROM votes 
+                                                        WHERE 
+                                                            YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+                                                            AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+                                                            AND (SELECT parent 
+                                                                FROM permissions_inheritance 
+                                                                WHERE 
+                                                                child = (SELECT name 
+                                                                        FROM permissions 
+                                                                        WHERE 
+                                                                            type = "1" 
+                                                                            AND permission = "name" 
+                                                                            AND value = username))
+                                                            NOT IN ("mod", "admin", "owner")			
+                                                        GROUP BY username 
+                                                        ORDER BY votes DESC 
+                                                        LIMIT 0,'.$number); 
          if($this->votes_lm == NULL) $this->votes_lm = FALSE;
          return $this->votes_lm;
          }
