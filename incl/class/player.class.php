@@ -608,8 +608,29 @@ class player {
      public function get_top_votes_lm(){
          if(!isset($this->votes_top)){
          $this->queries++;
-         $this->votes_top = $this->MySql_vote->QueryArray('SELECT username, count(*) AS "votes" FROM votes WHERE YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH) AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH) GROUP BY username ORDER BY votes DESC LIMIT 0,3');
-         return $this->votes_top;
+         $this->votes_top = $this->MySql_vote->QueryArray('
+                                                        SELECT username, count(*) AS "votes" 
+                                                        FROM votes 
+                                                        WHERE 
+                                                            YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
+                                                            AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
+                                                            AND (SELECT parent 
+                                                                FROM permissions_inheritance 
+                                                                WHERE 
+                                                                child = (SELECT name 
+                                                                        FROM permissions 
+                                                                        WHERE 
+                                                                            type = "1" 
+                                                                            AND permission = "name" 
+                                                                            AND value = username))
+                                                            NOT IN ("mod", "admin", "owner")			
+                                                        GROUP BY username 
+                                                        ORDER BY votes DESC 
+                                                        LIMIT 0,3'); 
+         if ($this->votes_top == NULL) {
+                $this->votes_top = FALSE;
+            }
+            return $this->votes_top;
          }
      else {
          return $this->votes_top; 
