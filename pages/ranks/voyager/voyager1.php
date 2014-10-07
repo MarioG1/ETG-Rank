@@ -46,7 +46,8 @@
 		<div class="thumbnail">
           <h2>Commands:</h2>
           <ul>
-          <li>All Builder commands</li>  
+          <li>All Builder commands</li> 
+          <li><b>/dynmap show</b> and <b>/dynmap hide</b> to control the visibility on the <a href="http://map.etg-clan.at">live map</a>.</li>
           </ul>
         </div>
 		</div>

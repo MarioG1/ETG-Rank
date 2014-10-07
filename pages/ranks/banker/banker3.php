@@ -52,10 +52,11 @@
           <h2>Commands:</h2>
           <ul>
           <li>All Builder commands</li>
-          <li><b>/money</b> name</li>
-          <li><b>/money top</b></li>
-          <li><b>/to</b> name</li>
-          <li><b>/from</b> name</li>
+          <li><b>/money <name> </b>to see the balance from another player.</li>
+          <li><b>/money top</b> to see the 5 richest players.</li>
+          <li><b>/to <name></b> to tp to an other player.</li>
+          <li><b>/from <name></b> to tp an other player to you.</li>
+          <li><b>/dynmap show</b> and <b>/dynmap hide</b> to control the visibility on the <a href="http://map.etg-clan.at">live map</a>.</li>
           </ul>
         </div>
 		</div>

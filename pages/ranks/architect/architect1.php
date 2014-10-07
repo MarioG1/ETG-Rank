@@ -58,9 +58,10 @@
           <h2>Commands:</h2>
           <ul>
           <li>All Builder commands</li>
-          <li><b>/link</b></li>
-          <li><b>/to</b> name</li>
-          <li><b>/from</b> name</li>
+          <li><b>/link</b> to link warps to buttons.</li>
+          <li><b>/to <name></b> to tp to an other player.</li>
+          <li><b>/from <name></b> to tp an other player to you</li>
+          <li><b>/dynmap show</b> and <b>/dynmap hide</b> to control the visibility on the <a href="http://map.etg-clan.at">live map</a>.</li>
           </ul>
         </div>
 		</div>
