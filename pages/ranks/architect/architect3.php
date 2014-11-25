@@ -39,7 +39,7 @@
           <ul>
           <li>Can create Web Auction Signs.</li>
           <li>Can link warps to buttons/pressure plates.</li>
-          <li>Can set 40 Warp's.</li>
+          <li>Can set 50 Warp's.</li>
           <li>Can teleport to other player.</li>
           <li>Can teleport other player to him.</li>
           <li>Can create <a href="#marker_modal" role="button" data-toggle="modal">marker signs</a>.</li> 

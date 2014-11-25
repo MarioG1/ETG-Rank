@@ -38,7 +38,7 @@
 		<div class="thumbnail">
           <h2>Abilities:</h2>
           <ul>
-          <li>Can set 30 Warp's.</li>
+          <li>Can set 40 Warp's.</li>
           <li>Can use the <b>entity radar</b> from <a href="http://www.minecraftforum.net/topic/482147-151-mar21-reis-minimap-v33-04/">Rei's Minimap.</a></li>
           <li>Can build on the special <a href="http://minecraft.gamepedia.com/Amplified">Amplified Terrain</a> map.</li>
           </ul>

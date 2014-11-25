@@ -38,7 +38,7 @@
 		<div class="thumbnail">
           <h2>Abilities:</h2>
           <ul>
-          <li>Can set 30 Warp's.</li>
+          <li>Can set 40 Warp's.</li>
           <li>Can teleport to other player.</li>
           <li>Can teleport other player to him.</li>
           <li>Can build on the special <a href="http://minecraft.gamepedia.com/Amplified">Amplified Terrain</a> map.</li>

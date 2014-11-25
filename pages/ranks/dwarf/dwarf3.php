@@ -38,7 +38,7 @@
 		<div class="thumbnail">
           <h2>Abilities:</h2>
           <ul>
-          <li>Can set 40 Warp's.</li>   
+          <li>Can set 50 Warp's.</li>   
           <li>Can use the <b>cave view</b> from <a href="http://www.minecraftforum.net/topic/482147-151-mar21-reis-minimap-v33-04/">Rei's Minimap.</a></li>
           <li>Can teleport to other player.</li>
           <li>Can teleport other player to him.</li>
