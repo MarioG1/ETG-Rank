@@ -475,7 +475,7 @@ class player {
    public function get_money(){
       if(!isset($this->money)){
           $this->queries++;
-          $this->money = $this->MySql_iconomy->QuerySingleValue("SELECT balance FROM iconomy where username = '". $this->name ."'");
+          $this->money = $this->MySql_iconomy->QuerySingleValue("SELECT cc3_balance.balance AS balance FROM cc3_balance JOIN cc3_account ON cc3_account.id = cc3_balance.username_id WHERE cc3_account.uuid = '". $this->uuid ."' AND cc3_balance.currency_id = 1 AND cc3_balance.worldName = 'default'");
       }
       return $this->money;  
    }
