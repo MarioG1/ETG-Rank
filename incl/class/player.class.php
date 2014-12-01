@@ -690,7 +690,7 @@ class player {
           
           // VOTE KING ****************************
           foreach($this->get_top_votes_lm() AS $u){
-          if(!strcmp($this->name,$u['username'])){
+          if(!strcasecmp($this->name,$u['username'])){
             $this->ranks['voter'][1] = TRUE;
             break;
           } else {
