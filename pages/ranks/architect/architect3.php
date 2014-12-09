@@ -76,7 +76,7 @@
        use a specific icon - if not specified, the icon sign is used). <br>
        If the marker is successfully created, the sign's text will erase the [dynmap] and icon: lines. If the sign is later deleted, the corresponding map marker is deleted.</p>
        <h3>Avivable Icons:</h3>
-       <img src="https://camo.githubusercontent.com/9db598a2984ee843180041450e7292f284208624/687474703a2f2f6d696b657072696d6d2e636f6d2f696d616765732f4d61726b6572732e706e67"></img>
+       <img src="./images/marker.png"></img>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>

@@ -13,12 +13,12 @@
       if($player->get_ranks()['banker'][3]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_banker_limits()['NAME_3'].'</b> please reconnect to apply changes! </div>';
           $player->set_rank($config->get_banker_limits()['PERM_3']);
-		  $player->save_rank('banker', 3);
+          $player->save_rank('banker', 3);
       }
       elseif ($player->get_ranks()['banker'][2]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_banker_limits()['NAME_2'].'</b> please reconnect to apply changes! </div>';
           $player->set_rank($config->get_banker_limits()['PERM_2']);
-		  $player->save_rank('banker', 2);
+          $player->save_rank('banker', 2);
       }
       elseif ($player->get_ranks()['banker'][1]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_banker_limits()['NAME_1'].'</b> please reconnect to apply changes! </div>';
