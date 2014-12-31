@@ -439,8 +439,12 @@ class player {
             return TRUE;
         } else {
             return FALSE;
-        }
-        
+        }      
+    }
+    
+    public function set_prefix($prefix){
+            send_message('pex user '.$this->name().' prefix '.$prefix, $this->name(), 'true');
+            return TRUE;     
     }
     
     public function get_debug(){

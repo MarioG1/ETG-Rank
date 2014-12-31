@@ -133,6 +133,18 @@ class config {
    public function get_voter_limits(){
         return $this->ini_array['Voter'];
     }
+    
+    public function get_rank_name($perm, $lvl){
+        return $this->ini_array[ucfirst($perm)]["NAME_".$lvl];
+    }
+    
+    public function get_rank_perm($perm, $lvl){
+        return $this->ini_array[ucfirst($perm)]["PERM_".$lvl];
+    }
+   
+    public function get_rank_prefix($perm, $lvl){
+        return $this->ini_array[ucfirst($perm)]["PREFIX_".$lvl];
+    }
         
 }
 

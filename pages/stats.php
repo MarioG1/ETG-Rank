@@ -12,18 +12,21 @@
      {
       if($player->get_ranks()['banker'][3]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_banker_limits()['NAME_3'].'</b> please reconnect to apply changes! </div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_banker_limits()['PERM_3']);
           $player->save_rank('banker', 3);
       }
       elseif ($player->get_ranks()['banker'][2]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_banker_limits()['NAME_2'].'</b> please reconnect to apply changes! </div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_banker_limits()['PERM_2']);
           $player->save_rank('banker', 2);
       }
       elseif ($player->get_ranks()['banker'][1]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_banker_limits()['NAME_1'].'</b> please reconnect to apply changes! </div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_banker_limits()['PERM_1']);
-		  $player->save_rank('banker', 1);
+          $player->save_rank('banker', 1);
      }}
      else
      {
@@ -38,14 +41,17 @@
      {
       if($player->get_ranks()['voyager'][3]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_voyager_limits()['NAME_3'].'</b> please reconnect to apply changes! </div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_voyager_limits()['PERM_3']);
       }
       elseif ($player->get_ranks()['voyager'][2]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_voyager_limits()['NAME_2'].'</b> please reconnect to apply changes! </div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_voyager_limits()['PERM_2']);
       }
       elseif ($player->get_ranks()['voyager'][1]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_voyager_limits()['NAME_1'].'</b> please reconnect to apply changes! </div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_voyager_limits()['PERM_1']);
      }}
      else
@@ -59,11 +65,19 @@
    {
      if($player->get_current_rank() != 'owner' AND $player->get_current_rank() != 'mod' AND $player->get_current_rank() != 'admin')
      {
-      if ($player->get_ranks()['donator'][2]){
-          echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_donator_limits()['NAME_2'].'</b> please reconnect to apply changes! </div>';
-          $player->set_rank($config->get_donator_limits()['PERM_2']);
+      if ($player->get_ranks()['donator'][1]){
+          if(isset($_POST["do_ranks"])){
+              $rank = explode("_", $_POST["do_ranks"])[0];
+              $lvl = explode("_", $_POST["do_ranks"])[1];
+              if($player->get_ranks()[$rank][$lvl]){
+                    echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_donator_limits()['NAME_2'].'</b> please reconnect to apply changes! </div>';
+                    echo $rank." : ".$lvl;
+                    $player->set_rank($config->get_rank_perm($rank,$lvl));
+                    $player->set_prefix($config->get_rank_prefix('donator',1));
+              }
+          }
       }
-      elseif ($player->get_ranks()['donator'][1]){
+      elseif ($player->get_ranks()['donator'][2]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_donator_limits()['NAME_1'].'</b> please reconnect to apply changes! </div>';
           $player->set_rank($config->get_donator_limits()['PERM_1']);
      }}
@@ -80,14 +94,17 @@
      {
       if($player->get_ranks()['architect'][3]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_architect_limits()['NAME_3'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_architect_limits()['PERM_3']);
       }
       elseif ($player->get_ranks()['architect'][2]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_architect_limits()['NAME_2'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_architect_limits()['PERM_2']);
       }
       elseif ($player->get_ranks()['architect'][1]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_architect_limits()['NAME_1'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_architect_limits()['PERM_1']);
      }}
      else
@@ -103,14 +120,17 @@
      {
       if($player->get_ranks()['dwarf'][3]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_dwarf_limits()['NAME_3'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_dwarf_limits()['PERM_3']);
       }
       elseif ($player->get_ranks()['dwarf'][2]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_dwarf_limits()['NAME_2'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_dwarf_limits()['PERM_2']);
       }
       elseif ($player->get_ranks()['dwarf'][1]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_dwarf_limits()['NAME_1'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_dwarf_limits()['PERM_1']);
      }}
      else
@@ -126,14 +146,17 @@
      {
       if($player->get_ranks()['warrior'][3]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_warrior_limits()['NAME_3'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_warrior_limits()['PERM_3']);
       }
       elseif ($player->get_ranks()['warrior'][2]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_warrior_limits()['NAME_2'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_warrior_limits()['PERM_2']);
       }
       elseif ($player->get_ranks()['warrior'][1]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_warrior_limits()['NAME_1'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_warrior_limits()['PERM_1']);
      }}
      else
@@ -149,6 +172,7 @@
      {
       if($player->get_ranks()['don'][1]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_don_limits()['NAME_1'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_don_limits()['PERM_1']);
      }
      else
@@ -165,6 +189,7 @@
      {
       if($player->get_ranks()['voter'][1]){
           echo'<div class="alert alert-success"> Your are now a <b>'.$config->get_voter_limits()['NAME_1'].'</b></div>';
+          $player->set_prefix('""');
           $player->set_rank($config->get_voter_limits()['PERM_1']);
      }}
      else

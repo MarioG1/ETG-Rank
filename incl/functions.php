@@ -83,12 +83,17 @@ function get_face($name) {
        }
      }else{
       if($valid){
-          echo '<button type="submit" class="btn btn-primary" name="'.$rank.'">Choose Rank&raquo;</button>';   
+          if($rank == 'donator'){
+            echo '<button class="btn btn-primary" type="button" href="#donator_modal" role="button" data-toggle="modal">Choose Rank&raquo;</button>';
+          } elseif($rank == 'vip'){
+            echo '<button class="btn btn-primary" type="button" href="#vip_modal" role="button" data-toggle="modal">Choose Rank&raquo;</button>';
+          } else {
+            echo '<button type="submit" class="btn btn-primary" name="'.$rank.'">Choose Rank&raquo;</button>';    
+          }
       }else{
           echo '<button type="submit" class="btn btn-primary disabled" name="" disabled="disabled">Choose Rank&raquo;</button>'; 
       }
-     }
-     
+     }    
    }
 
 //RANK STUFF *******************************************************************
