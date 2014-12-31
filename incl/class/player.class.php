@@ -614,21 +614,14 @@ class player {
          $this->queries++;
          $this->votes_top = $this->MySql_vote->QueryArray('
                                                         SELECT username, count(*) AS "votes" 
-                                                        FROM votes 
+                                                        FROM votes v 
+                                                        LEFT JOIN permissions p ON p.value = v.username 
+                                                        LEFT JOIN permissions_inheritance pi ON p.name = pi.child
                                                         WHERE 
                                                             YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
                                                             AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
-                                                            AND (SELECT parent 
-                                                                FROM permissions_inheritance 
-                                                                WHERE 
-                                                                child = (SELECT name 
-                                                                        FROM permissions 
-                                                                        WHERE 
-                                                                            type = "1" 
-                                                                            AND permission = "name" 
-                                                                            AND value = username))
-                                                            NOT IN ("mod", "admin", "owner")			
-                                                        GROUP BY username 
+                                                            AND pi.parent NOT IN ("mod", "admin", "owner")		
+                                                        GROUP BY v.username 
                                                         ORDER BY votes DESC 
                                                         LIMIT 0,3'); 
          if ($this->votes_top == NULL) {
