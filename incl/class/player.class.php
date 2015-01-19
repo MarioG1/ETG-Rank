@@ -471,7 +471,7 @@ class player {
     private function get_playtime(){
       if(!isset($this->playtime)){
           $this->queries++;
-          $this->playtime = $this->MySql_stats->QuerySingleValue("SELECT playtime FROM stats_players WHERE uuid = '". $this->get_stats_id() ."'");
+          $this->playtime = $this->MySql_stats->QuerySingleValue("SELECT playtime FROM stats_players WHERE uuid = '". $this->uuid ."'");
       }
       return $this->playtime;  
    } 
@@ -636,6 +636,9 @@ class player {
    
    public function get_ranks(){
       if(!isset($this->ranks)){
+          //Guest
+          $this->ranks['guest'][1] = TRUE;
+          
           // BUILDER *****************************
           if($this->config->get_builder_limits()['ONTIME'] < $this->get_playtime()){
           foreach($this->config->get_builder_limits()['BLOCKS'] AS $k){
