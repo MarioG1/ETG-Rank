@@ -80,11 +80,11 @@ if(isset($_POST["save"]))
 		<div class="thumbnail">
           <h2>Donator</h2>
          <h4>Allow Donator Rank</h4>
-         <form method="POST"><label class="radio">
+         <form method="POST"><label class="checkbox">
          <input type="checkbox" name="optionsDonator" id="optionsRadios1" value="1" <?php if($s_player->get_ranks()['donator'][1]) echo "checked"; ?>>
          <?php echo $config->get_donator_limits()['NAME_1'];?>
          </label>
-         <label class="radio">
+         <label class="checkbox">
          <input type="checkbox" name="optionsDonator" id="optionsRadios2" value="2" <?php if($s_player->get_ranks()['donator'][2]) echo "checked"; ?>>
          <?php echo $config->get_donator_limits()['NAME_2'];?>
          </label>
