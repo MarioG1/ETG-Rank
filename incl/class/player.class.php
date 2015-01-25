@@ -589,7 +589,7 @@ class player {
     public function get_votes_tm(){
          if(!isset($this->votes_tm)){
          $this->queries++;
-         $this->votes_tm = $this->MySql_vote->QueryArray('SELECT username, count(*) AS "votes" FROM votes WHERE MONTH(timestamp) = MONTH(CURDATE()) AND YEAR(timestamp) = YEAR(CURDATE()) AND username = "'.$this->name.'"')[0];
+         $this->votes_tm = $this->MySql_vote->QueryArray('SELECT username, count(*) AS "votes" FROM votes WHERE MONTH(timestamp) = MONTH(CURDATE()) AND YEAR(timestamp) = YEAR(CURDATE()) AND uuid = "'.$this->uuid.'"')[0];
          return $this->votes_tm;
          }
      else {
@@ -600,7 +600,7 @@ class player {
     public function get_votes_lm(){
          if(!isset($this->votes_lm)){
          $this->queries++;
-         $this->votes_lm = $this->MySql_vote->QueryArray('SELECT username, count(*) AS "votes" FROM votes WHERE timestamp >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) AND timestamp <= DATE_SUB(NOW(), INTERVAL 1 MONTH) AND username = "'.$this->name.'"')[0];
+         $this->votes_lm = $this->MySql_vote->QueryArray('SELECT username, count(*) AS "votes" FROM votes WHERE timestamp >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) AND timestamp <= DATE_SUB(NOW(), INTERVAL 1 MONTH) AND uuid = "'.$this->uuid.'"')[0];
          if($this->votes_lm == NULL) $this->votes_lm = 0;
          return $this->votes_lm;
          }
@@ -613,15 +613,14 @@ class player {
          if(!isset($this->votes_top)){
          $this->queries++;
          $this->votes_top = $this->MySql_vote->QueryArray('
-                                                        SELECT username, count(*) AS "votes" 
+                                                        SELECT username, uuid, count(*) AS "votes" 
                                                         FROM votes v 
-                                                        LEFT JOIN permissions p ON p.value = v.username 
-                                                        LEFT JOIN permissions_inheritance pi ON p.name = pi.child
+                                                        LEFT JOIN permissions_inheritance pi ON v.uuid = pi.child
                                                         WHERE 
                                                             YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
                                                             AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
                                                             AND pi.parent NOT IN ("mod", "admin", "owner")		
-                                                        GROUP BY v.username 
+                                                        GROUP BY v.uuid 
                                                         ORDER BY votes DESC 
                                                         LIMIT 0,3'); 
          if ($this->votes_top == NULL) {
@@ -690,7 +689,7 @@ class player {
           
           // VOTE KING ****************************
           foreach($this->get_top_votes_lm() AS $u){
-          if(!strcasecmp($this->name,$u['username'])){
+          if(!strcasecmp($this->uuid,$u['uuid'])){
             $this->ranks['voter'][1] = TRUE;
             break;
           } else {

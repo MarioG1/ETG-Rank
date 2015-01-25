@@ -219,15 +219,14 @@ class server {
          if(!isset($this->votes_tm)){
          $this->queries++;
          $this->votes_tm = $this->MySql_vote->QueryArray('
-                                                        SELECT username, count(*) AS "votes" 
+                                                        SELECT username, uuid, count(*) AS "votes" 
                                                         FROM votes v 
-                                                        LEFT JOIN permissions p ON p.value = v.username 
-                                                        LEFT JOIN permissions_inheritance pi ON p.name = pi.child
+                                                        LEFT JOIN permissions_inheritance pi ON v.uuid = pi.child
                                                         WHERE 
                                                             MONTH(timestamp) = MONTH(CURDATE()) 
                                                             AND YEAR(timestamp) = YEAR(CURDATE()) 
 							    AND pi.parent NOT IN ("mod", "admin", "owner")		
-                                                        GROUP BY v.username 
+                                                        GROUP BY v.uuid 
                                                         ORDER BY votes DESC 
                                                         LIMIT 0,'.$number);
          if($this->votes_tm == NULL) $this->votes_tm = FALSE;
@@ -242,15 +241,14 @@ class server {
          if(!isset($this->votes_lm)){
          $this->queries++;
          $this->votes_lm = $this->MySql_vote->QueryArray('
-                                                        SELECT username, count(*) AS "votes" 
+                                                        SELECT username, uuid, count(*) AS "votes" 
                                                         FROM votes v 
-                                                        LEFT JOIN permissions p ON p.value = v.username 
-                                                        LEFT JOIN permissions_inheritance pi ON p.name = pi.child
+                                                        LEFT JOIN permissions_inheritance pi ON v.uuid = pi.child
                                                         WHERE 
                                                             YEAR(timestamp) = YEAR(CURRENT_DATE - INTERVAL 1 MONTH)
                                                             AND MONTH(timestamp) = MONTH(CURRENT_DATE - INTERVAL 1 MONTH)
                                                             AND pi.parent NOT IN ("mod", "admin", "owner")		
-                                                        GROUP BY v.username 
+                                                        GROUP BY v.uuid 
                                                         ORDER BY votes DESC 
                                                         LIMIT 0,'.$number); 
          if($this->votes_lm == NULL) $this->votes_lm = FALSE;
@@ -261,9 +259,9 @@ class server {
      }  
    }
    
-    public function get_votes_lm_player($name){
+    public function get_votes_lm_player($uuid){
          $this->queries++;
-         $votes = $this->MySql_vote->QuerySingleValue('SELECT count(*) AS "votes" FROM votes WHERE timestamp >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) AND timestamp <= DATE_SUB(NOW(), INTERVAL 1 MONTH) AND username ="'.$name.'"'); 
+         $votes = $this->MySql_vote->QuerySingleValue('SELECT count(*) AS "votes" FROM votes WHERE timestamp >= DATE_ADD(LAST_DAY(DATE_SUB(NOW(), INTERVAL 2 MONTH)), INTERVAL 1 DAY) AND timestamp <= DATE_SUB(NOW(), INTERVAL 1 MONTH) AND uuid ="'.$uuid.'"'); 
          if($votes == NULL) $votes = 0;
          return $votes;
    }

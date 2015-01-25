@@ -120,7 +120,7 @@
                         foreach($votes_tm as $k){
                              echo '<td align="center" valign="top">';
                              echo '<img src="';
-                             $votes_lm = $server->get_votes_lm_player($k['username']);
+                             $votes_lm = $server->get_votes_lm_player($k['uuid']);
                              if($k['votes'] == $votes_lm){ echo "./images/arrow_stady.png";}
                              elseif ($k['votes'] < $votes_lm){ echo "./images/arrow_down.png";}
                              else echo "./images/arrow_up.png";
