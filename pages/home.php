@@ -11,19 +11,25 @@
           <h2>Online Players:</h2>
           <p>
           <?php
-           for($i=0;$i<$server->get_online_players_number();$i++)
+          $query = json_decode(file_get_contents('http://api.minetools.eu/query/mc.etg-clan.at/25565'), true);
+          
+          $playerlist = $query['Playerlist'];
+          $players = $query['Players'];
+          $maxplayers = $query['MaxPlayers'];
+          
+           for($i=0;$i<$players;$i++)
            {
            echo '<img src="';
-           echo get_face($server->get_online_players()[$i]);
+           echo get_face($playerlist[$i]);
            echo '"title="';
-           echo $server->get_online_players()[$i];
+           echo $playerlist[$i];
            echo '" style="margin:2px;"></img>';
            }
           ?>
           </p>
           
           <div class="progress progress-striped">
-              <div class="bar" style="width: <?php echo calculate_proz($server->get_online_players_number(),$server->get_max_players());?>%"></div>
+              <div class="bar" style="width: <?php echo calculate_proz($players,$maxplayers);?>%"></div>
           </div>
           <p><a class="btn" href="http://stats.etg-clan.at/">View details &raquo;</a></p>
 		  </div>
