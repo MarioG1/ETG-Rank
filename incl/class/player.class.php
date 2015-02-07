@@ -651,22 +651,22 @@ class player {
           } else $this->ranks['builder'][1] = FALSE;
           
           // BANKER ******************************
-          if($this->get_money() > $this->config->get_banker_limits()['MONEY_3']) $this->ranks['banker'][3] = TRUE; else $this->ranks['banker'][3] = FALSE;
-          if($this->get_money() > $this->config->get_banker_limits()['MONEY_2']) $this->ranks['banker'][2] = TRUE; else $this->ranks['banker'][2] = FALSE;
-          if($this->get_money() > $this->config->get_banker_limits()['MONEY_1']) $this->ranks['banker'][1] = TRUE; else $this->ranks['banker'][1] = FALSE;
+          if($this->get_money() >= $this->config->get_banker_limits()['MONEY_3']) $this->ranks['banker'][3] = TRUE; else $this->ranks['banker'][3] = FALSE;
+          if($this->get_money() >= $this->config->get_banker_limits()['MONEY_2']) $this->ranks['banker'][2] = TRUE; else $this->ranks['banker'][2] = FALSE;
+          if($this->get_money() >= $this->config->get_banker_limits()['MONEY_1']) $this->ranks['banker'][1] = TRUE; else $this->ranks['banker'][1] = FALSE;
           
           // WARRIOR******************************
           foreach($this->config->get_warrior_limits()['KILLS'] AS $k){
               $help = $this->get_kills_id($this->config->get_warrior_limits()['KILLS']);
-              if($k['number'] > $help[$k['id']]){
+              if($k['number'] >= $help[$k['id']]){
                   $this->ranks['warrior'][1] = FALSE;
                   break ;
               } 
               $this->ranks['warrior'][1] = TRUE;
           }
           
-          if($this->get_ukills()['pvp'] > $this->config->get_warrior_limits()['UKILLS_2'] AND $this->get_kills()['pvp'] >  $this->config->get_warrior_limits()['KILLS_2'] AND calculate_kd($this->get_kills()['pvp'], $this->get_deaths()['pvp']) > $this->config->get_warrior_limits()['KD_2'] AND $this->ranks['warrior'][1]) $this->ranks['warrior'][2] = TRUE; else $this->ranks['warrior'][2] = FALSE; 
-          if($this->get_ukills()['pvp'] > $this->config->get_warrior_limits()['UKILLS_3'] AND $this->get_kills()['pvp'] >  $this->config->get_warrior_limits()['KILLS_3'] AND calculate_kd($this->get_kills()['pvp'], $this->get_deaths()['pvp'] + $this->get_deaths()['pve']) > $this->config->get_warrior_limits()['KD_3'] AND $this->ranks['warrior'][1]) $this->ranks['warrior'][3] = TRUE; else $this->ranks['warrior'][3] = FALSE; 
+          if($this->get_ukills()['pvp'] >= $this->config->get_warrior_limits()['UKILLS_2'] AND $this->get_kills()['pvp'] >=  $this->config->get_warrior_limits()['KILLS_2'] AND calculate_kd($this->get_kills()['pvp'], $this->get_deaths()['pvp']) >= $this->config->get_warrior_limits()['KD_2'] AND $this->ranks['warrior'][1]) $this->ranks['warrior'][2] = TRUE; else $this->ranks['warrior'][2] = FALSE; 
+          if($this->get_ukills()['pvp'] >= $this->config->get_warrior_limits()['UKILLS_3'] AND $this->get_kills()['pvp'] >=  $this->config->get_warrior_limits()['KILLS_3'] AND calculate_kd($this->get_kills()['pvp'], $this->get_deaths()['pvp'] + $this->get_deaths()['pve']) > $this->config->get_warrior_limits()['KD_3'] AND $this->ranks['warrior'][1]) $this->ranks['warrior'][3] = TRUE; else $this->ranks['warrior'][3] = FALSE; 
           
           // DWARF *******************************
           if($this->get_blocks()['placed'] > $this->config->get_dwarf_limits()['PLACED_3'] AND $this->get_blocks()['broken'] > $this->config->get_dwarf_limits()['BROKEN_3']) $this->ranks['dwarf'][3] = TRUE; else $this->ranks['dwarf'][3] = FALSE;
