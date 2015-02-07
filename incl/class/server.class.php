@@ -86,7 +86,7 @@ class server {
    {
      if(!isset($this->bans_ID)){
          $this->queries++;
-         $help = $this->MySql_bans->QueryArray('SELECT player_id FROM banhammer_bans WHERE expires_at IS NULL AND state = 0 ORDER BY created_at DESC LIMIT 0,'.$number);
+         $help = $this->MySql_bans->QueryArray('SELECT player_id FROM bh_bans WHERE expires_at IS NULL AND state = 0 ORDER BY created_at DESC LIMIT 0,'.$number);
          for($i=0;$i<$number;$i++) {
          $help_[$i] = $help[$i][0];   
          }

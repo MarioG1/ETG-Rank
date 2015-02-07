@@ -28,14 +28,14 @@
                    echo'<td>';
                    echo $server->get_ban_name($k['creator_id']);
                    echo'</td><td>';
-                   echo $k['reason'];
+                   echo $k['comment'];
                    echo'</td><td>';
                    if($k['expires_at'] != NULL) echo date("F j, Y, g:i a",strtotime($k['expires_at']));
                    else echo "Perm. Ban";
                    echo'</td><td>';
                    echo date("F j, Y, g:i a",strtotime($k['created_at']));
                    echo'</td><td>';
-                   if($k['state'] != 0){ echo '<img src="./images/no.png" width="32" height="32" title="No"></img>';} else echo '<img src="./images/yes.png" width="32" height="32" title="Yes"></img>';
+                   if($k['state'] <= 0){ echo '<img src="./images/no.png" width="32" height="32" title="No"></img>';} else echo '<img src="./images/yes.png" width="32" height="32" title="Yes"></img>';
                    echo'</td>';
                    echo"</tr>";
                   }

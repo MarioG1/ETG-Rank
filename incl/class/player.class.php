@@ -322,7 +322,7 @@ class player {
  public function get_bans(){
      if(!isset($this->bans)){
          $this->queries++;
-         $this->bans = $this->MySql_bans->QueryArray("SELECT * FROM banhammer_bans WHERE player_id = '". $this->get_ban_id() ."' ORDER BY id DESC");
+         $this->bans = $this->MySql_bans->QueryArray("SELECT bb.created_at, bb.expires_at, bb.creator_id, bb.state, bc.comment FROM bh_bans bb JOIN bh_comments bc ON bb.id = bc.ban_id WHERE bb.player_id = '". $this->uuid ."' ORDER BY bb.created_at DESC");
          return $this->bans;   
          }
      else {
@@ -333,7 +333,7 @@ class player {
   public function get_ban_id(){
       if(!isset($this->banid)){
           $this->queries++;
-          $id=$this->MySql_bans->QuerySingleValue("SELECT id FROM banhammer_players WHERE name = '".$this->name."'");
+          $id=$this->MySql_bans->QuerySingleValue("SELECT id FROM bh_players WHERE name = '".$this->name."'");
           if($id != FALSE){
             $this->banid = $id;
             return $id;
