@@ -651,9 +651,9 @@ class player {
           } else $this->ranks['builder'][1] = FALSE;
           
           // BANKER ******************************
-          if($this->get_money() > $this->config->get_banker_limits()['MONEY_3']) $this->ranks['banker'][3] = TRUE; else $this->ranks['banker'][3] = FALSE;
-          if($this->get_money() > $this->config->get_banker_limits()['MONEY_2']) $this->ranks['banker'][2] = TRUE; else $this->ranks['banker'][2] = FALSE;
-          if($this->get_money() > $this->config->get_banker_limits()['MONEY_1']) $this->ranks['banker'][1] = TRUE; else $this->ranks['banker'][1] = FALSE;
+          if($this->get_money() >= $this->config->get_banker_limits()['MONEY_3']) $this->ranks['banker'][3] = TRUE; else $this->ranks['banker'][3] = FALSE;
+          if($this->get_money() >= $this->config->get_banker_limits()['MONEY_2']) $this->ranks['banker'][2] = TRUE; else $this->ranks['banker'][2] = FALSE;
+          if($this->get_money() >= $this->config->get_banker_limits()['MONEY_1']) $this->ranks['banker'][1] = TRUE; else $this->ranks['banker'][1] = FALSE;
           
           // WARRIOR******************************
           foreach($this->config->get_warrior_limits()['KILLS'] AS $k){
