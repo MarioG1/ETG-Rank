@@ -183,7 +183,7 @@
            <li><a href="http://www.minecraft-serverlist.net/server/504">www.minecraft-serverlist.net</a></li>
            <li><a href="http://minecraftservers.org/server/144508">www.minecraftservers.org</a></li>
            <li><a href="http://minecraft-server-list.com/server/45509/">www.minecraft-server-list.com</a></li>
-           <li><a href="https://minestatus.net/29670-etg-free-build-and-survival-24-7">www.minestatus.net</a></li>
+           <li><a href="http://minestatus.net/29670-etg-free-build-and-survival-24-7">www.minestatus.net</a></li>
            <li><a href="http://minecraft.serverlister.com/servers/f8e35bf0b36c43eb921bd3cf4294c1bb/etg-free-build-and-survival-24-7">www.serverlister.com</a></li>
            <li><a href="http://www.minecraft-index.com/848-etg-free-build-and-survival-24-7">www.minecraft-index.com</a></li>
            <li><a href="http://minecraft-server.eu/index.php?go=server&id=78519">www.minecraft-server.eu</a></li>
