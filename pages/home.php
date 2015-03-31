@@ -7,33 +7,48 @@
       <!-- Example row of columns -->
       <div class="row">
         <div class="span4">
-		<div class="thumbnail">
-          <h2>Online Players:</h2>
-          <p>
-          <?php
-          $query = json_decode(file_get_contents('http://api.minetools.eu/query/mc.etg-clan.at/25565'), true);
-          
-          $playerlist = $query['Playerlist'];
-          $players = $query['Players'];
-          $maxplayers = $query['MaxPlayers'];
-          
-           for($i=0;$i<$players;$i++)
-           {
-           echo '<img src="';
-           echo get_face($playerlist[$i]);
-           echo '"title="';
-           echo $playerlist[$i];
-           echo '" style="margin:2px;"></img>';
-           }
-          ?>
-          </p>
-          
-          <div class="progress progress-striped">
-              <div class="bar" style="width: <?php echo calculate_proz($players,$maxplayers);?>%"></div>
-          </div>
-          <p><a class="btn" href="http://stats.etg-clan.at/">View details &raquo;</a></p>
-		  </div>
-		</div>
+            <div class="thumbnail">
+                <h2>Online Players:</h2>
+                <p>
+                <?php
+                    require_once('./incl/minecraftquery/MinecraftQuery.php');
+                    require_once('./incl/minecraftquery/MinecraftQueryException.php');
+
+                    use xPaw\MinecraftQuery;
+                    use xPaw\MinecraftQueryException;
+
+                    $Query = new MinecraftQuery( );
+
+                    try
+                    {
+                        $Query->Connect( 'localhost', 25565 );
+                        
+                        $playerlist = $Query->GetPlayers();
+                        $players = $Query->GetInfo()['Players'];
+                        $maxplayers = $Query->GetInfo()['MaxPlayers'];
+                        
+                        for($i=0;$i<$players;$i++)
+                        {
+                            echo '<img src="';
+                            echo get_face($playerlist[$i]);
+                            echo '"title="';
+                            echo $playerlist[$i];
+                            echo '" style="margin:2px;"></img>';
+                        } 
+                    }
+                    catch( MinecraftQueryException $e )
+                    {
+                      
+                    }                
+                ?>
+                </p>
+
+                <div class="progress progress-striped">
+                    <div class="bar" style="width: <?php echo calculate_proz($players,$maxplayers);?>%"></div>
+                </div>
+                <p><a class="btn" href="http://stats.etg-clan.at/">View details &raquo;</a></p>
+            </div>
+	</div>
 
         <div class="span4">
 		<div class="thumbnail">

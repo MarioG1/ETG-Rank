@@ -1177,6 +1177,13 @@ input[type="checkbox"] {
   line-height: normal;
 }
 
+input[type="select"] {
+  margin: 8px 0 0;
+  margin-top: 1px \9;
+  *margin-top: 0;
+  line-height: normal;
+}
+
 input[type="file"],
 input[type="image"],
 input[type="submit"],

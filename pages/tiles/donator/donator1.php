@@ -19,7 +19,6 @@
     <p>As an Donator you can use the <font color="#0000AA">[</font><font color="#FFAA00"><?php echo $config->get_donator_limits()['NAME_1'];?></font><font color="#0000AA">]</font> prefix with the permissions of one of your unlocked ranks.</p>
        <h3>Aviable Ranks:</h3>
        <form method="POST">
-           <table width="100%">
             <?php
             //verfügbare Ränge aus datenbank auslesen und ich textform anzeigen.
             $ranks = $player->get_ranks();
@@ -29,19 +28,18 @@
                 foreach($value as $lvl => $unlocked){
                     if($unlocked && $name != 'donator'){
                         if($i==0){
-                            echo "<tr>";
+                            echo "<div class='row-fluid'>";
                         }
-                        echo"<td><label class='radio'><input type='radio' name='do_ranks' value='".$name."_".$lvl."'>". $config->get_rank_name($name,$lvl)."</label></td>";
+                        echo"<div class='span4'><label class='radio'><input type='radio' name='do_ranks' value='".$name."_".$lvl."'>". $config->get_rank_name($name,$lvl)."</label></div>";
                         if($i==2){
-                            echo "</tr>";
-                            $i = 0;
+                            echo "</div>";
+                            $i = -1;
                         }
                         $i++;
                     }
                 }          
             }
             ?>
-           </table>
     </div>
   <div class="modal-footer">   
         <button type="submit" name="donator" class="btn btn-success">Accept</button>
