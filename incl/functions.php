@@ -56,7 +56,7 @@ function get_face($name) {
         }
         else
         {
-         $ret = "http://map.etg-clan.at/tiles/faces/32x32/Default.png";
+         $ret = "https://minotar.net/helm/".$name."/32.png";
         }
     }
 
@@ -83,9 +83,9 @@ function get_face($name) {
        }
      }else{
       if($valid){
-          if($rank == 'donator'){
+          if($rank == 'donator' && $level == 1){
             echo '<button class="btn btn-primary" type="button" href="#donator_modal" role="button" data-toggle="modal">Choose Rank&raquo;</button>';
-          } elseif($rank == 'vip'){
+          } elseif($rank == 'donator' && $level == 2){
             echo '<button class="btn btn-primary" type="button" href="#vip_modal" role="button" data-toggle="modal">Choose Rank&raquo;</button>';
           } else {
             echo '<button type="submit" class="btn btn-primary" name="'.$rank.'">Choose Rank&raquo;</button>';    
