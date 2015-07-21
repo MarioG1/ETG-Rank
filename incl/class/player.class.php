@@ -141,7 +141,7 @@ class player {
       if ($this->check_password($user,$password))
       {
        $this->isloggedin = TRUE;
-       $this->name = $user;
+       $this->name = trim($user);
        $this->uuid = $this->get_uuid();
        $this->stats_id = $this->get_stats_id();
        return true;
