@@ -225,11 +225,39 @@
    }
    
  ?>
-
+ 
+ <?php
+ 
+  if(isset($_POST["shop_change"]) && $player->is_loggedin())
+  {
+     switch($player->set_pw_shop($_POST["shop_pw_new"],$_POST["shop_pw_new_conf"]))
+     {
+         case 0: 
+             echo'<div class="alert alert-success"> Password Changed! </div>';
+             $player->istemppass = FALSE;
+             break;
+         case 1:
+             echo'<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button> Wrong Shop Password! </div>';
+             break;
+         case 2:
+             echo'<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button> Password dont match! </div>';
+             break;
+         case 3:
+             echo'<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button> Password is to short! </div>';
+             break;
+         default:
+             echo'<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button> Something went wrong! Please contact an admin. </div>';
+             break;  
+     }
+  }
+  ?>
+  
  <!-- Render selected page -->
 
-     <?php
-        //$player->has_emain(); //Checks if the player has an E-Mail
+     <?php  
+     if($player->istemppass) {
+        include $player->has_access('pages/change_password.php');         
+     } else {
         switch($page)
         {
           case "home":
@@ -320,10 +348,11 @@
                  include 'pages/home.php';
                  break;
           }
+     }
      ?>
 
       <footer>
-        <p>&copy; ETG-Clan 2013</p>
+        <p>&copy; ETG-Clan <?php echo date("Y");?></p>
       </footer>
 
     </div> <!-- /container -->

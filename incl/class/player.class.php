@@ -16,6 +16,7 @@ class player {
         
         //login data
         
+        public $istemppass;
         private $name;
         private $uuid;
         private $isloggedin;
@@ -84,7 +85,7 @@ class player {
     public function __sleep() {
         if($this->config->get_debug()) echo '__sleep Player';
         //return array('name', 'isloggedin', 'actual_rank', 'email', 'bans', 'banid', 'money', 'kills','kills_id', 'ukills', 'deaths', 'blocks', 'blocks_id', 'distance', 'donated', 'arch', 'uuid', 'votes_top', 'votes_tm', 'votes_lm' );
-        return array('name', 'isloggedin', 'uuid', 'stats_id');
+        return array('name', 'isloggedin', 'istemppass', 'uuid', 'stats_id');
     }  
 
     public function __construct($name=FALSE) {
@@ -137,18 +138,34 @@ class player {
       $hostname = $_SERVER['HTTP_HOST'];
       $path = dirname($_SERVER['PHP_SELF']);
 
-      // Benutzername und Passwort werden �berpr�ft
-      if ($this->check_password($user,$password))
-      {
-       $this->isloggedin = TRUE;
-       $this->name = trim($user);
-       $this->uuid = $this->get_uuid();
-       $this->stats_id = $this->get_stats_id();
-       return true;
+      // Benutzername und Passwort werden überprüft
+      
+      $result = $this->check_password($user,  md5($password));
+      if($result !== TRUE && strlen($password) < 32){
+          $result = $this->check_password($user, $password);
+          if($result){
+                $this->istemppass = TRUE;
+                $this->isloggedin = TRUE;
+                $this->name = trim($user);
+                $this->uuid = $this->get_uuid();
+                $this->stats_id = $this->get_stats_id();
+               return true;
+          } else {
+              $this->istemppass = FALSE;
+              return false;
+          }
       }
-      else
-      {
-       return false;
+      if($result === TRUE){
+            $this->istemppass = FALSE;
+            $this->isloggedin = TRUE;
+            $this->name = trim($user);
+            $this->uuid = $this->get_uuid();
+            $this->stats_id = $this->get_stats_id();
+            return true;
+      }
+      if($result === FALSE){
+          $this->istemppass = FALSE;
+          return false;
       }
     }
     
@@ -293,6 +310,22 @@ class player {
                     return 4;
                 } else return 0;
             } else return 1;    
+        } else return 3;   
+   }else return 2;
+ }
+ 
+  public function set_pw_shop($newpw,$confpw){
+   if((!strcmp($newpw,$confpw)))
+   {
+     if((strlen($newpw)>=5))
+        {
+            $hash = md5($newpw);
+            $values["password"] = $this->MySql_shop->SQLValue($hash);
+            $where["playerName"] = $this->MySql_shop->SQLValue($this->name());
+            if($this->MySql_shop->UpdateRows("wa_Players",$values,$where) != TRUE)
+            {
+                return 4;
+            } else return 0;  
         } else return 3;   
    }else return 2;
  }

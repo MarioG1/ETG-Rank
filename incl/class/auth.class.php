@@ -14,11 +14,10 @@ trait auth {
     
      private function check_password($nickname,$password) {
 
-     $hash_db = $this->MySql_shop->QuerySingleValue("SELECT password FROM wa_Players WHERE playerName = '$nickname'");
+     $password_db = $this->MySql_shop->QuerySingleValue("SELECT password FROM wa_Players WHERE playerName = '$nickname'");
      if($this->MySql_shop->rowcount() == 1)
      {
-      $hash_pw=md5($password);
-      if(strcasecmp($hash_db, $hash_pw)) return false;
+      if(strcasecmp($password_db, $password)) return false;
       else return true;
      }
      else return false;
